@@ -1,16 +1,14 @@
-# Step 1: Tomcat base image ka use karein
+# Tomcat base image
 FROM tomcat:9.0-jdk11-openjdk-slim
 
-# Step 2: Default webapps ko delete karein (optional but recommended)
-RUN rm -rf /usr/local/tomcat/webapps/*
+# Purane default files hatao
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# Step 3: Apni .war file ko Tomcat ke webapps folder mein copy karein
-# Agar aap chahte hain ki project domain ke root par chale (e.g., example.com/), 
-# toh file ka naam ROOT.war hona chahiye.
-COPY ./target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Sabhi files (jsp, html, images, mp3) ko ROOT folder mein copy karo
+# Taki aapka project direct domain par khule
+COPY . /usr/local/tomcat/webapps/ROOT/
 
-# Step 4: Port expose karein
+# Port expose
 EXPOSE 8080
 
-# Step 5: Tomcat start karein
 CMD ["catalina.sh", "run"]
